@@ -3,3 +3,5 @@ tests/inputs.ka
 tests/inputs~0.ka
 tests/t.json
 tests/stats
+models/resimulation_model/.ipynb_checkpoints
+**/.DS_Store
