@@ -21,3 +21,15 @@ resimulate TRACE_FILE -b RULE
 ```
 resimulates the trace contained in the json file `TRACE_FILE`, blocking every instance
 of rule `RULE`.
+
+## How to run resimulation algo
+Example
+```
+'KaSim' 'test.ka' '-var' 'VA' '10000' '-trace' 't.json' -seed 23952244
+dune exec bin/resimulate.exe -- tests/t.json --block-instances b --stats tests/stats --silent
+
+```
+## Command to convert Kappa model to SBML
+```
+KaDE -i kappamodelname.ka --ode-backend SBML
+```
