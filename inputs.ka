@@ -1,0 +1,31 @@
+// "uuid" : "943343310"
+%def: "seed" "23952244"
+%def: "dumpIfDeadlocked" "true"
+%def: "maxConsecutiveClash" "3"
+%def: "progressBarSize" "70"
+%def: "progressBarSymbol" "#"
+%def: "plotPeriod" "1" "t.u."
+%def: "outputFileName" "data.csv"
+%def: "traceFileName" "t_2.json"
+
+%agent: K(d[d.S] x{u p})
+%agent: S(d[d.K] x{u p})
+
+%var:/*0*/ 'VA' 10000
+%var:/*1*/ 'off_rate_fast' 1000
+%var:/*2*/ 'off_rate_slow' 1
+%var:/*3*/ 'mod_rate' 5
+%var:/*4*/ 'mod_rate_slow' 0.05
+%var:/*5*/ 'on_rate' (1 / VA)
+%plot: [T]
+'pK' K(x{u/p}[#]) @ mod_rate_slow
+'b' K(d[./1]), S(d[./1]) @ on_rate
+'u' K(d[1/.] x{u}[#]), S(d[1/.]) @ off_rate_fast
+'u*' K(d[1/.] x{p}[#]), S(d[1/.]) @ off_rate_slow
+'p' K(d[1]), S(d[1] x{u/p}[#]) @ mod_rate
+
+/*0*/%mod: (|S(x{p})| > |S(x{u})|) do $STOP ; repeat [false]
+
+%init: VA K(d[.] x{u}[.]), S(d[.] x{u}[.])
+
+%mod: [E] = 147851 do $STOP;
